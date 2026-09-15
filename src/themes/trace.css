@@ -1,0 +1,2 @@
+
+.trace-layer { position: absolute; inset: 0; pointer-events: none; z-index: 10; background: url(/themes/trace/board-backdrop.svg) no-repeat center/cover; opacity: 0.5; mix-blend-mode: screen; }

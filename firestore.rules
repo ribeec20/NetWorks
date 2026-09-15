@@ -1,0 +1,59 @@
+rules_version='2'
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ── Helper ──
+    function isSignedIn() {
+      return request.auth != null;
+    }
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    // ── Allowlist (invite-only beta — managed via Firebase Console) ──
+    match /allowlist/{email} {
+      // No client access — only readable by Cloud Functions (Admin SDK)
+      allow read, write: if false;
+    }
+
+    // ── Tags (global, shared across all users) ──
+    match /tags/{tagId} {
+      // Anyone authenticated can read tags
+      allow read: if isSignedIn();
+      // Anyone authenticated can create tags
+      allow create: if isSignedIn();
+      // Updates allowed, but cannot flip builtIn from true to false
+      allow update: if isSignedIn()
+        && !(resource.data.builtIn == true && request.resource.data.builtIn == false);
+      // Only user-created tags can be deleted
+      allow delete: if isSignedIn() && resource.data.builtIn != true;
+    }
+
+    // ── User profiles ──
+    match /users/{userId} {
+      // Users can only read/write their own profile
+      allow read, write: if isOwner(userId);
+
+      // ── Contacts (nested under user) ──
+      match /contacts/{contactId} {
+        allow read, write: if isOwner(userId);
+
+        // ── Interactions (nested under contact) ──
+        match /interactions/{interactionId} {
+          allow read, write: if isOwner(userId);
+        }
+
+        // ── Builders (nested under contact) ──
+        match /builders/{builderId} {
+          allow read, write: if isOwner(userId);
+        }
+      }
+
+      // ── Connections (flat under user) ──
+      match /connections/{connectionId} {
+        allow read, write: if isOwner(userId);
+      }
+    }
+  }
+}

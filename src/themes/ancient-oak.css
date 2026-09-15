@@ -1,0 +1,2 @@
+
+.ancient-oak-layer { position: absolute; inset: 0; pointer-events: none; z-index: 10; background: url(/themes/ancient-oak/forest-backdrop.svg) no-repeat center/cover; opacity: 0.3; mix-blend-mode: multiply; }

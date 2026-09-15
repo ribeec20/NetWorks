@@ -1,0 +1,158 @@
+/* Forest Canopy Theme */
+
+[data-theme="forest"],
+[data-theme="forest"].dark {
+  color-scheme: dark;
+  --background: #020617; /* Very dark background */
+  --foreground: #f0fdf4;
+  
+  --card: rgba(5, 46, 22, 0.7); 
+  --card-foreground: #dcfce7;
+  
+  --secondary: transparent; /* Rely on animated parent or self */
+  --secondary-foreground: #f0fdf4;
+
+  --primary: #4ade80; 
+  --primary-foreground: #022c22;
+  
+  --border: #a16207; /* Brown nodes and edges (branches) */
+  --input: #14532d;
+  --ring: #22c55e;
+
+  --graph-label-color: #d7f6d1;
+  --graph-edge-color: #77552b;
+  --graph-edge-muted-color: rgba(145, 185, 127, 0.34);
+  
+  --muted: #022c22;
+  --muted-foreground: #86efac;
+
+  /* Glass Layers (dark/forest adapted) */
+  --glass-1-bg: rgba(5, 46, 22, 0.65);
+  --glass-2-bg: rgba(5, 46, 22, 0.75);
+  --glass-3-bg: rgba(5, 46, 22, 0.85);
+  --glass-border: rgba(74, 222, 128, 0.2);
+  --glass-highlight: rgba(74, 222, 128, 0.3);
+}
+
+/* Branch and leaves animated background for the main canvas */
+[data-theme="forest"] .bg-secondary,
+[data-theme="forest"].dark .bg-secondary {
+  background-color: #061e0e;
+  /* Multiple scrolling layers of branches and leaves */
+  background-image: 
+    radial-gradient(circle at 15% 50%, rgba(22, 101, 52, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 85% 30%, rgba(20, 83, 45, 0.08) 0%, transparent 50%),
+    url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="150" height="150"><path d="M -20,150 Q 50,75 160,-20" stroke="%233f2e14" stroke-width="4" stroke-opacity="0.3" fill="none"/><circle cx="50" cy="75" r="4" fill="%2316a34a" fill-opacity="0.4"/><circle cx="100" cy="30" r="5" fill="%2322c55e" fill-opacity="0.3"/><circle cx="130" cy="-5" r="3" fill="%234ade80" fill-opacity="0.2"/></svg>'),
+    url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="300"><path d="M 300,320 Q 150,150 -20,-20" stroke="%23261a0a" stroke-width="8" stroke-opacity="0.4" fill="none"/><circle cx="150" cy="150" r="8" fill="%2315803d" fill-opacity="0.3"/><circle cx="50" cy="50" r="6" fill="%23166534" fill-opacity="0.3"/></svg>');
+  background-size: 100% 100%, 100% 100%, 150px 150px, 300px 300px;
+  animation: forestCanopy 90s linear infinite;
+  box-shadow: inset 0 0 100px rgba(0,0,0,0.8);
+}
+
+[data-theme="forest"] .graph-scene--forest,
+[data-theme="forest"].dark .graph-scene--forest {
+  background:
+    radial-gradient(circle at 50% 42%, rgba(224, 238, 205, 0.2), transparent 22%),
+    radial-gradient(circle at 50% 82%, rgba(53, 33, 12, 0.52), transparent 18%),
+    linear-gradient(180deg, rgba(5, 28, 13, 0.86) 0%, rgba(4, 20, 9, 0.72) 22%, rgba(8, 31, 14, 0.3) 58%, rgba(3, 11, 5, 0.88) 100%);
+  overflow: hidden;
+}
+
+[data-theme="forest"] .graph-scene-decoration,
+[data-theme="forest"].dark .graph-scene-decoration {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+[data-theme="forest"] .graph-scene-decoration > div,
+[data-theme="forest"].dark .graph-scene-decoration > div {
+  position: absolute;
+  inset: 0;
+}
+
+[data-theme="forest"] .graph-scene-mist,
+[data-theme="forest"].dark .graph-scene-mist {
+  background:
+    radial-gradient(circle at 30% 45%, rgba(214, 233, 190, 0.08), transparent 30%),
+    radial-gradient(circle at 70% 50%, rgba(205, 231, 184, 0.1), transparent 28%),
+    radial-gradient(circle at 50% 65%, rgba(255, 255, 255, 0.08), transparent 36%);
+  filter: blur(36px);
+  animation: forestMistDrift 26s ease-in-out infinite alternate;
+}
+
+[data-theme="forest"] .graph-scene-mist--front,
+[data-theme="forest"].dark .graph-scene-mist--front {
+  opacity: 0.78;
+  animation-duration: 18s;
+}
+
+[data-theme="forest"] .graph-scene-mist--back,
+[data-theme="forest"].dark .graph-scene-mist--back {
+  opacity: 0.4;
+}
+
+[data-theme="forest"] .graph-scene-branches,
+[data-theme="forest"].dark .graph-scene-branches {
+  inset: auto 0 0 0;
+  height: 100%;
+  background-image:
+    url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900"><g fill="none" stroke-linecap="round"><path d="M600 900 C590 760 520 640 470 560 C430 495 415 430 418 368" stroke="%2357341a" stroke-width="20"/><path d="M600 900 C612 748 675 650 724 560 C772 472 785 420 780 352" stroke="%23694827" stroke-width="18"/><path d="M510 580 C430 470 350 398 260 332" stroke="%23765431" stroke-width="12"/><path d="M692 582 C772 486 860 412 956 352" stroke="%23765431" stroke-width="12"/><path d="M442 438 C392 372 334 316 270 274" stroke="%23805e34" stroke-width="9"/><path d="M756 426 C810 360 874 305 940 260" stroke="%23805e34" stroke-width="9"/><path d="M360 332 C310 280 252 238 198 214" stroke="%23805e34" stroke-width="6"/><path d="M842 326 C900 272 964 234 1018 206" stroke="%23805e34" stroke-width="6"/></g></svg>');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center bottom;
+  opacity: 0.42;
+  filter: blur(0.2px);
+}
+
+[data-theme="forest"] .graph-scene-fireflies,
+[data-theme="forest"].dark .graph-scene-fireflies {
+  background-image:
+    radial-gradient(circle at 14% 63%, rgba(242, 246, 152, 0.9) 0 0.2rem, transparent 0.24rem),
+    radial-gradient(circle at 28% 34%, rgba(222, 247, 124, 0.8) 0 0.18rem, transparent 0.24rem),
+    radial-gradient(circle at 44% 54%, rgba(248, 238, 137, 0.92) 0 0.16rem, transparent 0.22rem),
+    radial-gradient(circle at 62% 38%, rgba(223, 241, 131, 0.88) 0 0.16rem, transparent 0.22rem),
+    radial-gradient(circle at 76% 61%, rgba(243, 244, 162, 0.9) 0 0.18rem, transparent 0.24rem),
+    radial-gradient(circle at 88% 74%, rgba(228, 237, 120, 0.8) 0 0.16rem, transparent 0.22rem);
+  filter: blur(0.35px);
+  animation: forestFireflies 9s ease-in-out infinite alternate;
+  opacity: 0.82;
+}
+
+[data-theme="forest"] .graph-scene > .relative,
+[data-theme="forest"].dark .graph-scene > .relative {
+  z-index: 1;
+}
+
+@keyframes forestCanopy {
+  0% {
+    background-position: 0 0, 0 0, 0 0, 0 0;
+  }
+  100% {
+    background-position: 0 0, 0 0, -300px 300px, -600px 600px;
+  }
+}
+
+@keyframes forestMistDrift {
+  0% {
+    transform: translate3d(-1.5%, 0, 0) scale(1);
+  }
+  100% {
+    transform: translate3d(1.5%, -1%, 0) scale(1.04);
+  }
+}
+
+@keyframes forestFireflies {
+  0% {
+    transform: translateY(0);
+    opacity: 0.55;
+  }
+  50% {
+    opacity: 0.95;
+  }
+  100% {
+    transform: translateY(-8px);
+    opacity: 0.7;
+  }
+}
